@@ -5,8 +5,6 @@ import sys
 #Bash Colors
 RED = '\033[91m'
 GREEN = '\033[92m'
-YELLOW = '\033[93m'
-BLUE = '\033[94m'
 RESET = '\033[0m'
 
 #Characters that can not be included in user code input
@@ -15,7 +13,7 @@ NONO = "~`!@#$%^&*()-+=:;<>,."
 
 def any_char(str1, str2):
     """
-    check if any char fround in str1 is in str2
+    Check if to strings share any characters
     """
     for char in str1:
         if char in str2:
@@ -29,6 +27,9 @@ def count_lines(filepath):
     """
     with open(filepath, 'r') as f:
         return sum(1 for line in f)
+    
+
+
 
 #Gather input for method of hashing
 while True:
@@ -65,14 +66,17 @@ hash_count = count_lines(hashes)
 loading = 0.0
 last = 0
 
+
 print("============================================[INITIALIZING]============================================")
 print("[", end="")
 with open(hashes, 'r') as hash_file:
     for hash_ in hash_file:
+        #Draw loading bar
         if int(loading) > last:
             last += 1
             sys.stdout.write("#")
-            sys.stdout.flush()    
+            sys.stdout.flush()
+
         #set all hashes in haslist to dictionary as FAILED 
         found[f"{hash_.strip()}"] = RED + "[FAILED]" + RESET
         loading += 101/hash_count
@@ -86,6 +90,7 @@ print("==============================================[LOADING]==================
 print("[", end="")
 with open(names, 'r') as name_file:
     for name in name_file:
+        #Draw laoding bar
         if int(loading) > last:
             last += 1
             sys.stdout.write("#")
@@ -108,6 +113,7 @@ print("]\n\n")
 for hash_ in found:
     print(f"{hash_} == {found[hash_]}")
 
+#If the save is not empty write the file
 if save.strip() != "":
     with open(save.strip(), 'w') as save_file:
         for hash_ in found:
